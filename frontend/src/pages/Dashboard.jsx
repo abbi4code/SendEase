@@ -32,7 +32,7 @@ const Dashboard = () => {
     <>
       {token ? (
         <div className="h-screen flex justify-center bg-red-500 ">
-          <div className="flex flex-col p-20 w-full bg-gray-600">
+          <div className="flex flex-col  w-full bg-gray-600">
             <div className="p-10 bg-white">
               <div className="bg-black w-full h-1 mb-3 rounded-lg"></div>
               <Appbar userid={"U"} />
