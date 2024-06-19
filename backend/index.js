@@ -31,5 +31,6 @@ app.listen(PORT, async () => {
     console.log(`Connected to http://localhost:${PORT}`);
   } catch (error) {
     console.log("error", error);
+    res.json({msg: "error while connecting with databse", error})
   }
 });
