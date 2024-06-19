@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(200).json({ msg: "new user created", token });
   } catch (error) {
-    res.status(404).json({ msg: "error during user registration Try Again" });
+    res.status(404).json({ msg: "error during user registration Try Again" }, error);
   }
 });
 
