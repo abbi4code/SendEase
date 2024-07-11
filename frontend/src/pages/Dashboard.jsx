@@ -42,7 +42,7 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        <Warning label={"Not logged In"} onClick={"/signin"} />
+        <Warning  />
       )}
     </>
   );
