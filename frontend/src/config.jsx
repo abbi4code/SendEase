@@ -1,1 +1,1 @@
-export const backendurl = "https://sendease.onrender.com";
+export const backendurl = "https://sendease.onrender.com/api/v1";
