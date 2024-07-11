@@ -41,7 +41,7 @@ const Signin = () => {
                   password,
                 });
                 localStorage.setItem("token", res.data.token);
-                navigate("/dashboard");
+                navigate("/");
               }}
             />
             <Buttonwarning

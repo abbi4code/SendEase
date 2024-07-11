@@ -68,7 +68,7 @@ const Signup = () => {
                 //now we need to store this in localstorage
                 localStorage.setItem("token", res.data.token);
 
-                navigate("/dashboard");
+                navigate("/");
               }}
               label={"Signup"}
             />
