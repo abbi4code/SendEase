@@ -1,18 +1,24 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-
-
-
+import dotenv from "dotenv";
 import router from "./routes/index.js";
 
-const app = express();
-const PORT = 3000;
-const URI =
-  "mongodb+srv://abhishek:abhishek@todo.77xy7dp.mongodb.net/?retryWrites=true&w=majority";
 
+
+
+
+const app = express();
+dotenv.config();
 app.use(cors());
+
 app.use(express.json());
+const URI = process.env.DB_URI ;
+const PORT = process.env.PORT | 3000;
+
+console.log(URI)
+ 
+
 
 app.get("/", (req, res) => {
   res.send("how are you");

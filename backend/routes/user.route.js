@@ -3,9 +3,13 @@ import { Account, User } from "../models/User.model.js";
 import zod from "zod";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config.js";
+
+
+
 import authMiddleware from "../middlewares/middleware.js";
 
+let JWT_SECRET  = process.env.JWT_SECRET || "dosomething";
+console.log(JWT_SECRET);
 const router = express.Router();
 const uservalidation = zod.object({
   username: zod.string(),
@@ -58,6 +62,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(200).json({ msg: "new user created", token });
   } catch (error) {
+    console.log("eror while signup")
     res.status(404).json({ msg: "error during user registration Try Again" });
   }
 });
