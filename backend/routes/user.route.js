@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(200).json({ msg: "new user created", token });
   } catch (error) {
-    res.status(404).json({ msg: "error during user registration Try Again" }, error);
+    res.status(404).json({ msg: "error during user registration Try Again" });
   }
 });
 
@@ -106,10 +106,6 @@ router.put("/update", authMiddleware, async (req, res) => {
     }
 
     const filter = { _id: req.userid };
-    // const updateFields = {};
-    // if (password) updateFields.password = password;
-    // if (firstname) updateFields.firstname = firstname;
-    // if (lastname) updateFields.lastname = lastname;
 
     const updatefields = {};
     if (password) {
@@ -119,14 +115,12 @@ router.put("/update", authMiddleware, async (req, res) => {
     if (firstname) updatefields.firstname = firstname;
     if (lastname) updatefields.lastname = lastname;
 
-    //updateone take object what you want to change and update thing
-
     const updateuser = await User.updateOne({ _id: req.userid }, updatefields);
-    // console.log(updateuser)
+
     if (!updateuser) {
       res.status(404).json({ msg: "error while users credentials updation" });
     }
-    // await updateuser.save();
+
     if (updateuser.nModified === 0) {
       return res
         .status(404)
@@ -141,23 +135,10 @@ router.put("/update", authMiddleware, async (req, res) => {
 });
 
 router.get("/bulk", async (req, res) => {
-  //this will take the query parameter from the url
   const filter = req.query.filter || "";
   const finalfilter = filter.toLowerCase();
 
   try {
-    //but what you want to seach that query can be firstname or canbe lastname
-
-    //<---------Method 1--------->
-    // const searcheduser =await User.findOne({firstname: filter})
-    // if(!searcheduser){
-    //     return res.status(403).json({msg:"user not found"})
-    // }
-    // const user = {firstname: searcheduser.firstname,lastname: searcheduser.lastname,_id: searcheduser._id}
-
-    // res.json({user})
-
-    //<resonable method
     const users = await User.find({
       $or: [
         {
@@ -184,7 +165,6 @@ router.get("/bulk", async (req, res) => {
       })),
     });
   } catch (error) {
-    // console.log(error)
     return res.status(400).json({ msg: "error while seaching user", error });
   }
 });

@@ -17,13 +17,11 @@ router.get("/balance", authMiddleware, async (req, res) => {
 
     res.json({ accountbalance });
   } catch (error) {
-    // console.log("error",error)
     res.json({ msg: "error while getting account balance", error });
   }
 });
 
 router.post("/transfer", authMiddleware, async (req, res) => {
-  //you can create a session which will ensure that either all process will run  or none will
   const session = await mongoose.startSession();
 
   try {
@@ -38,13 +36,9 @@ router.post("/transfer", authMiddleware, async (req, res) => {
 
     const toaccount = await Account.findOne({ userid: to });
     if (!toaccount) {
-      //if no users found you want to abort transaction
       await session.abortTransaction();
       return res.json({ msg: "no account found" });
     }
-
-    // here you have to do two thing first cut the money from sender and add the amount to reciever at hte same time
-    // but below is bad solution
 
     await Account.updateOne({ userid: userid }, { $inc: { balance: -amount } });
     await Account.updateOne({ userid: to }, { $inc: { balance: +amount } });

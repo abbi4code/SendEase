@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import Sendmoney from "./pages/Sendmoney";
 import Profile from "./pages/Profile";
+import Home from "./pages/Home";
 
 function App() {
   const authenticated = localStorage.getItem("token");
@@ -19,6 +20,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/send" element={<Sendmoney />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<Home />} />
 
           <Route
             path="/"

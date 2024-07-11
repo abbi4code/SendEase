@@ -35,22 +35,22 @@ export default function Users() {
         onChange={(e) => setfilter(e.target.value)}
         type="text"
         placeholder="Search Users here"
-        className="w-full border p-1 py-2 rounded-lg"
+        className="w-full border border-slate-500 mb-5 font-bold text-2xl px-3 py-3 rounded-lg h-[5rem]"
       />
       {users.map((user) => {
         const bgcolor = randomColorCode();
         console.log(bgcolor);
 
         return (
-          <div className="flex justify-between">
+          <div className="flex justify-between border border-b-black py-4 px-5 rounded-xl">
             <div className="flex gap-3 justify-center">
               <div
-                className={`border rounded-full px-3 py-2 font-bold text-sm items-center`}
+                className={`border rounded-full px-4 py-2 font-bold text-lg items-center`}
                 style={{ backgroundColor: bgcolor }}
               >
                 {user.firstname[0]}
               </div>
-              <div className="flex gap-1 justify-center items-center">
+              <div className="flex gap-1 justify-center font-bold text-lg items-center">
                 <h1>{user.firstname}</h1>
                 <h1>{user.lastname}</h1>
               </div>
