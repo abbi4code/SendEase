@@ -70,7 +70,7 @@ const Sendmoney = () => {
               label={"Initiate Transfer"}
               onClick={async () => {
                 await axios.post(
-                  "http://localhost:3000/api/v1/account/transfer",
+                  `${backendurl}/account/transfer`,
                   {
                     to: id,
                     amount: amount,

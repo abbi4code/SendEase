@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { backendurl } from "../config";
 
 function randomColorCode() {
   const letters = "0123456789ABCDEF";
@@ -22,7 +23,7 @@ export default function Users() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+      .get(`${backendurl}/user/bulk?filter=` + filter)
       .then((res) => {
         setUsers(res.data.user);
       });
