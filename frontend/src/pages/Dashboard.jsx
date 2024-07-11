@@ -12,14 +12,11 @@ const Dashboard = () => {
   useEffect(() => {
     const balancefunc = async () => {
       try {
-        let res = await axios.get(
-          `${backendurl}/account/balance`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
+        let res = await axios.get(`${backendurl}/account/balance`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
         setbalance(res.data.accountbalance);
       } catch (error) {
         console.log(error);

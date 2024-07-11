@@ -7,6 +7,7 @@ import Buttonwarning from "../components/Buttonwarning";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendurl } from "../config";
+import toast, { Toaster } from "react-hot-toast";
 
 const Signin = () => {
   const [username, setusername] = useState("");
@@ -36,12 +37,22 @@ const Signin = () => {
             <Button
               label={"Signin"}
               onClick={async () => {
-                const res = await axios.post(`${backendurl}/user/signin`, {
-                  username,
-                  password,
-                });
-                localStorage.setItem("token", res.data.token);
-                navigate("/");
+                try {
+                  const res = await axios.post(`${backendurl}/user/signin`, {
+                    username,
+                    password,
+                  });
+                  const token = res.data.token;
+                  if (token) {
+                    localStorage.setItem("token", token);
+                    toast.success("Login Success");
+                    setTimeout(() => {
+                      navigate("/");
+                    }, 1000);
+                  }
+                } catch (error) {
+                  toast.error("Invalid Credentials");
+                }
               }}
             />
             <Buttonwarning
@@ -52,6 +63,31 @@ const Signin = () => {
           </div>
         </div>
       </div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </div>
   );
 };

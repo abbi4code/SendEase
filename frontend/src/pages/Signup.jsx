@@ -4,12 +4,10 @@ import Subheading from "../components/Subheading";
 import Inputbox from "../components/Inputbox";
 import Button from "../components/Button";
 import Buttonwarning from "../components/Buttonwarning";
-import Signin from "./Signin";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { backendurl } from "../config";
+import { Toaster, toast } from "react-hot-toast";
 
 const Signup = () => {
   const [firstname, setfirstname] = useState("");
@@ -59,16 +57,27 @@ const Signup = () => {
             />
             <Button
               onClick={async () => {
-                const res = await axios.post(`${backendurl}/user/signup`, {
-                  firstname,
-                  lastname,
-                  username,
-                  password,
-                });
-                //now we need to store this in localstorage
-                localStorage.setItem("token", res.data.token);
+                try {
+                  const res = await axios.post(`${backendurl}/user/signup`, {
+                    firstname,
+                    lastname,
+                    username,
+                    password,
+                  });
+                  const token = res.data.token;
+                  //now we need to store this in localstorage
+                  if (token) {
+                    localStorage.setItem("token", res.data.token);
+                    console.log(res.data);
+                    toast.success(res.data.msg);
 
-                navigate("/");
+                    setTimeout(() => {
+                      navigate("/");
+                    }, 1000);
+                  }
+                } catch (error) {
+                  toast.error("Invalid Credentials");
+                }
               }}
               label={"Signup"}
             />
@@ -80,6 +89,31 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </div>
   );
 };

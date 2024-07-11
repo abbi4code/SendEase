@@ -22,11 +22,9 @@ export default function Users() {
   // const code = Math.floor(Math.random() * 10000)+1
 
   useEffect(() => {
-    axios
-      .get(`${backendurl}/user/bulk?filter=` + filter)
-      .then((res) => {
-        setUsers(res.data.user);
-      });
+    axios.get(`${backendurl}/user/bulk?filter=` + filter).then((res) => {
+      setUsers(res.data.user);
+    });
   }, [filter]);
 
   return (

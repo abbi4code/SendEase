@@ -3,6 +3,7 @@ import Inputbox from "../components/Inputbox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendurl } from "../config";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function Profile() {
             <button
               className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border text-white border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-3 font-medium text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
               onClick={() => {
+                console.log("Back to Dashboard");
                 navigate("/dashboard");
               }}
             >
@@ -45,19 +47,25 @@ export default function Profile() {
             <button
               className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border text-white border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-3 font-medium text-xs  transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
               onClick={async () => {
-                await axios.put(
-                  `${backendurl}/user/update`,
-                  {
-                    password: password,
-                    firstname: firstname,
-                    lastname: lastname,
-                  },
-                  {
-                    headers: {
-                      Authorization: "Bearer " + localStorage.getItem("token"),
+                try {
+                  const res = await axios.put(
+                    `${backendurl}/user/update`,
+                    {
+                      password: password,
+                      firstname: firstname,
+                      lastname: lastname,
                     },
-                  }
-                );
+                    {
+                      headers: {
+                        Authorization:
+                          "Bearer " + localStorage.getItem("token"),
+                      },
+                    }
+                  );
+                  toast.success("Profile Updated");
+                } catch (error) {
+                  toast.error("Error Updating Profile");
+                }
               }}
             >
               Save-Changes
@@ -65,6 +73,31 @@ export default function Profile() {
           </div>
         </div>
       </div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </div>
   );
 }
